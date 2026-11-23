@@ -1,0 +1,14 @@
+#Django Framework
+Django>=5.2, <5.3
+
+#REST API Framework
+djangorestframework>=3.16, <4.0
+
+#Cross-Origin Resource Sharing
+django-cors-headers>=4.7, <5.0
+
+#Image Handling
+Pillow>=11.0, <13.0
+
+#Environment Variable Management
+python-decouple>=1.0, <2.0
