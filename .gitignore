@@ -1,0 +1,5 @@
+models/cnn/checkpoints/
+*.pt
+models/cnn/checkpoints/
+*.pt
+*.pth
