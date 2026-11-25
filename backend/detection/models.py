@@ -1,6 +1,22 @@
 from django.db import models
 
 
+# ==========================================================
+# FILE UPLOAD PATH
+# ==========================================================
+
+def detection_upload_path(instance, filename):
+
+    if instance.file_type == 'image':
+        return f'images/{filename}'
+
+    return f'videos/{filename}'
+
+
+# ==========================================================
+# DETECTION RECORD MODEL
+# ==========================================================
+
 class DetectionRecord(models.Model):
 
     # Uploaded file types
@@ -45,11 +61,16 @@ class DetectionRecord(models.Model):
 
     # Uploaded file information
     file_name = models.CharField(max_length=255)
+
     file_type = models.CharField(
         max_length=10,
         choices=FILE_TYPE_CHOICES
     )
-    uploaded_file = models.FileField(upload_to='uploads/%Y/%m/')
+
+    # IMPORTANT: Keep the original field name!
+    uploaded_file = models.FileField(
+        upload_to=detection_upload_path
+    )
 
     # Processing status
     status = models.CharField(
@@ -65,12 +86,14 @@ class DetectionRecord(models.Model):
         null=True,
         blank=True
     )
+
     vit_score = models.DecimalField(
         max_digits=5,
         decimal_places=2,
         null=True,
         blank=True
     )
+
     rppg_score = models.DecimalField(
         max_digits=5,
         decimal_places=2,
@@ -118,10 +141,17 @@ class DetectionRecord(models.Model):
         verbose_name_plural = 'Detection Records'
 
     def __str__(self):
+
         if self.main_prediction == self.FAKE and self.fake_type:
-            return f"{self.file_name} - Fake ({self.get_fake_type_display()})"
+            return (
+                f"{self.file_name} - "
+                f"Fake ({self.get_fake_type_display()})"
+            )
 
         if self.main_prediction:
-            return f"{self.file_name} - {self.get_main_prediction_display()}"
+            return (
+                f"{self.file_name} - "
+                f"{self.get_main_prediction_display()}"
+            )
 
         return f"{self.file_name} - Pending"
