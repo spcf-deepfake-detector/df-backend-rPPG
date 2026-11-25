@@ -1,0 +1,43 @@
+# FALSEFACET combined backend requirements
+# Python 3.11
+#
+# Install:
+# .brPPG/bin/python -m pip install -r requirements.txt
+#
+# CUDA-enabled PyTorch 2.14.1 / CUDA 13.0
+--extra-index-url https://download.pytorch.org/whl/cu130
+
+# Keep NumPy 1.x for compatibility with this MediaPipe/OpenCV stack
+numpy==1.26.4
+
+# Deep learning
+torch==2.14.1+cu130
+torchvision==0.29.1+cu130
+
+# Computer vision
+opencv-contrib-python==4.11.0.86
+mediapipe==0.10.21
+Pillow==12.3.0
+
+# Pin JAX to a Python 3.11 / NumPy 1.x-compatible release.
+# MediaPipe 0.10.21 declares JAX dependencies.
+jax==0.4.35
+jaxlib==0.4.35
+
+# Scientific computing
+scipy==1.17.1
+scikit-learn==1.9.1
+
+# ViT / Hugging Face
+transformers>=4.50,<5.0
+huggingface-hub>=0.30,<2.0
+safetensors>=0.5,<1.0
+
+# Django backend
+Django==5.2.19
+djangorestframework==3.18.3
+django-cors-headers==4.9.0
+python-decouple==3.8
+
+# Utilities
+tqdm>=4.66,<5.0
